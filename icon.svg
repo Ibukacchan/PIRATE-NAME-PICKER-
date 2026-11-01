@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" rx="110" fill="#071d2b"/>
+<circle cx="256" cy="238" r="170" fill="none" stroke="#e7b95f" stroke-width="18"/>
+<path d="M256 75v325M90 238h332" stroke="#e7b95f" stroke-width="8" opacity=".6"/>
+<path d="M256 115l44 112-44 112-44-112z" fill="#e7b95f"/>
+<circle cx="256" cy="238" r="40" fill="#071d2b" stroke="#f4e8c9" stroke-width="12"/>
+<path d="M156 360q100 55 200 0" fill="none" stroke="#f4e8c9" stroke-width="14" stroke-linecap="round"/>
+<text x="256" y="455" text-anchor="middle" font-family="Georgia,serif" font-size="38" font-weight="bold" fill="#e7b95f">GL</text>
+</svg>

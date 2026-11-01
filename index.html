@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071d2b">
+  <meta name="description" content="A pirate adventure classroom name picker and crew group generator.">
+  <title>Grand Line — Classroom Name Picker</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="sea-glow"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Grand Line home">
+      <span class="brand-mark">☠</span>
+      <span><strong>GRAND LINE</strong><small>CLASSROOM ADVENTURE</small></span>
+    </a>
+    <div class="top-actions">
+      <button class="icon-btn" id="musicToggle" aria-pressed="false" title="Toggle background music">♫ <span>Music off</span></button>
+      <button class="icon-btn" id="sfxToggle" aria-pressed="true" title="Toggle sound effects">🔊 <span>Effects on</span></button>
+      <button class="icon-btn" id="installBtn" hidden>＋ <span>Install app</span></button>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">✦ YOUR CLASS. YOUR CREW. YOUR ADVENTURE. ✦</p>
+        <h1>Set sail on the<br><em>Grand Line.</em></h1>
+        <p class="hero-text">Pick a name, assemble your crews, and let the classroom adventure begin.</p>
+        <div class="hero-stats">
+          <div><strong id="studentCount">16</strong><span>CREW MEMBERS</span></div>
+          <div><strong id="remainingCount">16</strong><span>NOT YET PICKED</span></div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div>
+        <div class="compass"><span>N</span><span>E</span><span>S</span><span>W</span><i>✦</i></div>
+        <div class="ship"><div class="sail sail-a"></div><div class="sail sail-b"></div><div class="mast"></div><div class="hull"></div><div class="flag">☠</div></div>
+        <div class="wave wave-a"></div><div class="wave wave-b"></div>
+        <span class="art-label">THE SEA IS CALLING</span>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="App sections">
+      <button class="tab active" data-tab="picker">☠ Name Picker</button>
+      <button class="tab" data-tab="groups">⚓ Crew Generator</button>
+      <button class="tab" data-tab="roster">📜 Crew Roster</button>
+    </nav>
+
+    <section class="panel tab-panel active" id="pickerPanel">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE DRAWING OF FATE</p><h2>Who will answer the call?</h2></div>
+        <span class="mini-tag">WANTED · ALIVE</span>
+      </div>
+      <div class="picker-layout">
+        <div class="wanted-wrap">
+          <div class="wanted-poster" id="wantedPoster">
+            <div class="poster-top">MARINE NOTICE</div>
+            <div class="poster-title">WANTED</div>
+            <div class="poster-art"><span class="poster-skull">☠</span><span class="poster-ribbon">GRAND LINE</span></div>
+            <div class="poster-name" id="pickedName">YOUR NEXT<br>ADVENTURER</div>
+            <div class="poster-bounty">BOUNTY <strong id="bountyValue">••••••</strong></div>
+            <div class="poster-bottom">DEAD OR ALIVE · THE CLASSROOM SEA</div>
+          </div>
+          <p class="poster-caption" id="posterCaption">Your next crew member is waiting to be revealed.</p>
+        </div>
+        <div class="picker-controls">
+          <div class="control-card">
+            <span class="step-label">01 / PREPARE THE DRAW</span>
+            <h3>Choose your next pirate.</h3>
+            <label class="check-row"><input type="checkbox" id="noRepeat" checked> <span><b>No-repeat mode</b><small>Skip names already drawn until you reset.</small></span></label>
+            <label class="check-row"><input type="checkbox" id="includePicked"> <span><b>Include previously picked</b><small>Allow everyone to be selected again.</small></span></label>
+            <button class="primary-btn" id="pickBtn"><span>☠</span> PICK A PIRATE <b>→</b></button>
+            <button class="secondary-btn" id="resetPicksBtn">↻ Reset drawn names</button>
+          </div>
+          <div class="last-drawn">
+            <div class="row-between"><h3>Recently drawn</h3><span class="tiny-muted" id="drawnLabel">0 drawn</span></div>
+            <div id="recentList" class="recent-list"><span class="empty-state">No names drawn yet. The sea is quiet...</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel tab-panel" id="groupsPanel">
+      <div class="section-heading">
+        <div><p class="eyebrow">GATHER YOUR ALLIES</p><h2>Form your pirate crews.</h2></div>
+        <span class="mini-tag">CREW ASSEMBLY</span>
+      </div>
+      <div class="group-controls">
+        <div class="control-card">
+          <span class="step-label">02 / SET YOUR CREW SIZE</span>
+          <div class="field-grid">
+            <label>Arrange by
+              <select id="groupMode"><option value="groups">Number of groups</option><option value="size">Students per group</option></select>
+            </label>
+            <label id="groupValueLabel">Number of groups
+              <input type="number" id="groupValue" min="1" max="16" value="4">
+            </label>
+          </div>
+          <div class="field-note" id="groupHint">16 students will be distributed as evenly as possible.</div>
+          <label class="check-row"><input type="checkbox" id="shuffleGroups" checked><span><b>Shuffle student order</b><small>Mix the roster before making crews.</small></span></label>
+          <button class="primary-btn" id="generateGroupsBtn"><span>⚓</span> ASSEMBLE CREWS <b>→</b></button>
+          <button class="secondary-btn" id="copyGroupsBtn" disabled>▣ Copy crew assignments</button>
+        </div>
+        <div class="control-card roster-mini">
+          <span class="step-label">YOUR CURRENT CREW</span>
+          <h3><span id="groupRosterCount">16</span> students ready to sail</h3>
+          <p>Manage your class list in the Crew Roster tab. You can also import a CSV file.</p>
+          <button class="text-btn" id="goRosterBtn">Manage roster →</button>
+        </div>
+      </div>
+      <div id="groupsOutput" class="groups-output">
+        <div class="empty-crews"><span>⚓</span><h3>Your crews will appear here.</h3><p>Choose your crew size and assemble the teams.</p></div>
+      </div>
+    </section>
+
+    <section class="panel tab-panel" id="rosterPanel">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE SHIP'S MANIFEST</p><h2>Manage your crew roster.</h2></div>
+        <span class="mini-tag">CLASS LIST</span>
+      </div>
+      <div class="roster-tools">
+        <form id="addForm" class="add-form"><label class="sr-only" for="newName">Student name</label><input id="newName" maxlength="60" placeholder="Enter a student name..." autocomplete="off"><button class="primary-btn" type="submit">＋ Add pirate</button></form>
+        <div class="file-actions">
+          <label class="upload-btn">↑ Import CSV<input type="file" id="csvImport" accept=".csv,text/csv"></label>
+          <button class="secondary-btn compact" id="exportBtn">↓ Export CSV</button>
+          <button class="secondary-btn compact danger-text" id="restoreBtn">Restore sample list</button>
+        </div>
+      </div>
+      <div class="roster-summary"><span><b id="rosterCount">16</b> crew members</span><span>Saved automatically on this device</span></div>
+      <ul id="rosterList" class="roster-list"></ul>
+      <p class="privacy-note">🔒 Your roster stays in this browser on this device. Export a CSV backup if you want to move it to another device.</p>
+    </section>
+
+    <footer class="footer"><span>☠ GRAND LINE CLASSROOM ADVENTURE</span><span>Made for teachers who lead the crew.</span></footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="./app.js" defer></script>
+</body>
+</html>
